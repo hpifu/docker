@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   jenkins:
-    image: hatlonely/jenkins:1.0.0
+    image: jenkins/jenkins:2.192
     hostname: jenkins
     deploy:
       replicas: 1
