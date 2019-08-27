@@ -1,0 +1,26 @@
+version: "3.5"
+services:
+  telegraf:
+    image: telegraf:1.9.5-alpine
+    hostname: telegraf
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - "${HOME}/var/docker/telegraf/data:/var/lib/telegraf"
+      - "${PWD}/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - telegrafnet
+      - influxdbnet
+      - mysqlnet
+networks:
+  telegrafnet:
+    name: telegrafnet
+  influxdbnet:
+    external: true
+    name: influxdbnet
+  mysqlnet:
+    external: true
+    name: mysqlnet

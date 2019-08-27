@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  elasticsearch:
+    image: hatlonely/elasticsearch:1.0.0
+    hostname: elasticsearch
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "${HOME}/var/docker/elasticsearch/log:/usr/share/elasticsearch/logs"
+      - "${HOME}/var/docker/elasticsearch/data:/usr/share/elasticsearch/data"
+    networks:
+      - elasticsearchnet
+networks:
+  elasticsearchnet:
+    name: elasticsearchnet

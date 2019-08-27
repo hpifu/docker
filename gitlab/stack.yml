@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  gitlab:
+    image: hatlonely/gitlab:1.0.0
+    hostname: gitlab
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    # ports:
+    #   - "8080:80"
+    #   - "8443:8443"
+    #   - "822:22"
+    volumes:
+      - "${HOME}/var/docker/gitlab/log:/var/log/gitlab"
+      - "${HOME}/var/docker/gitlab/data:/var/opt/gitlab"
+      - "${HOME}/var/docker/gitlab/conf:/etc/gitlab"
+    networks:
+      - gitlabnet
+networks:
+  gitlabnet:
+    name: gitlabnet

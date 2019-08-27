@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  wordpress:
+    image: hatlonely/wordpress:1.0.0
+    hostname: wordpress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    # ports:
+    #   - "8080:80"
+    volumes:
+      - "${HOME}/var/docker/wordpress/data:/var/www/html"
+    networks:
+      - wordpressnet
+      - mysqlnet
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: hatlonely
+      WORDPRESS_DB_PASSWORD: keaiduo1
+      WORDPRESS_DB_NAME: wordpress
+networks:
+  wordpressnet:
+    name: wordpressnet
+  mysqlnet:
+    external: true
+    name: mysqlnet

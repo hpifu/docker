@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  redis_cluster:
+    image: hatlonely/redis_cluster_for_test:1.0.0
+    hostname: redis_cluster
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "7000:7000"
+      - "7001:7001"
+      - "7002:7002"
+      - "7003:7003"
+      - "7004:7004"
+      - "7005:7005"
+    volumes:
+      - "${HOME}/var/docker/redis_cluster_for_test:/var/redis_cluster_for_test"
+    networks:
+      - redisnet
+networks:
+  redisnet:
+    name: redis_cluster_net

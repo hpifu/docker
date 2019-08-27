@@ -1,0 +1,22 @@
+version: "3"
+services:
+  mongo:
+    image: mongo
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: 500M
+      restart_policy:
+        condition: on-failure
+    command: --logpath /var/log/mongodb/mongo.log --dbpath /data --bind_ip 0.0.0.0
+    ports:
+      - 27017:27017
+    volumes:
+      - "${HOME}/var/docker/mongo/log:/var/log/mongodb"
+      - "${HOME}/var/docker/mongo/data:/data"
+    networks:
+      - mongonet
+networks:
+  mongonet:

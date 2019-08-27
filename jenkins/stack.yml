@@ -1,0 +1,19 @@
+version: "3.5"
+services:
+  jenkins:
+    image: hatlonely/jenkins:1.0.0
+    hostname: jenkins
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    # ports:
+    #   - "8080:8080"
+    #   - "50000:50000"
+    volumes:
+      - "${HOME}/var/docker/jenkins/data:/var/jenkins_home"
+    networks:
+      - jenkinsnet
+networks:
+  jenkinsnet:
+    name: jenkinsnet

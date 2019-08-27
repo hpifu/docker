@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+  kapacitor:
+    image: kapacitor:1.5.3-alpine
+    hostname: kapacitor
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9092:9092"
+    volumes:
+      - "${HOME}/var/docker/kapacitor/data:/var/lib/kapacitor"
+      - "${PWD}/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - kapacitornet
+      - influxdbnet
+      - smtpnet
+networks:
+  kapacitornet:
+    name: kapacitornet
+  influxdbnet:
+    external: true
+    name: influxdbnet
+  smtpnet:
+    external: true
+    name: smtpnet

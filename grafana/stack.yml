@@ -1,0 +1,35 @@
+version: "3.5"
+services:
+  grafana:
+    image: grafana/grafana:6.2.4
+    hostname: grafana
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    # ports:
+    #   - "3000:3000"
+    volumes:
+      - "${HOME}/var/docker/grafana/data:/var/lib/grafana"
+      - "${HOME}/var/docker/grafana/log:/var/log/grafana"
+      - "${PWD}/grafana.ini:/etc/grafana/grafana.ini:ro"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD_FILE: /run/secrets/admin_password
+    networks:
+      - grafananet
+      - influxdbnet
+      - elasticsearchnet
+      - smtpnet
+    user: "1000"
+networks:
+  grafananet:
+    name: grafananet
+  influxdbnet:
+    external: true
+    name: influxdbnet
+  elasticsearchnet:
+    external: true
+    name: elasticsearchnet
+  smtpnet:
+    external: true
+    name: smtpnet

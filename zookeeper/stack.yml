@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  zookeeper:
+    image: hatlonely/zookeeper:1.0.0
+    hostname: zookeeper
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+      - "8080:8080"
+    volumes:
+      - "${HOME}/var/docker/zookeeper/log:/usr/share/zookeeper/logs"
+      - "${HOME}/var/docker/zookeeper/data:/usr/share/zookeeper/data"
+    networks:
+      - zookeepernet
+networks:
+  zookeepernet:
+    name: zookeepernet

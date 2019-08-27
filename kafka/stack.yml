@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  kafka:
+    image: hatlonely/kafka:1.0.0
+    hostname: kafka
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9092:9092"
+    volumes:
+      - "${HOME}/var/docker/kafka/log:/usr/share/kafka/logs"
+      - "${HOME}/var/docker/kafka/data:/usr/share/kafka/data"
+    networks:
+      - zookeepernet
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      HOSTNAME_COMMAND: curl http://169.254.169.254/latest/meta-data/public-hostname
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+networks:
+  zookeepernet:
+    external: true
+    name: zookeepernet

@@ -1,0 +1,24 @@
+version: "3.5"
+services:
+  mysql:
+    image: hatlonely/mysql:1.0.0
+    hostname: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    environment:
+      MYSQL_ROOT_PASSWORD: keaiduo1
+    volumes:
+      - "${HOME}/var/docker/mysql/data:/var/lib/mysql"
+      - "${HOME}/var/docker/mysql/log:/var/log/mysqld"
+      - "${HOME}/var/docker/mysql/run:/var/run/mysqld"
+    networks:
+      - mysqlnet
+networks:
+  mysqlnet:
+    name: mysqlnet
