@@ -3,6 +3,7 @@ services:
   jenkins:
     image: jenkins/jenkins:2.191
     hostname: jenkins
+    user: root
     deploy:
       replicas: 1
       restart_policy:
@@ -12,6 +13,8 @@ services:
     #   - "50000:50000"
     volumes:
       - "${HOME}/var/docker/jenkins/data:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/bin/docker:/usr/bin/docker"
     networks:
       - jenkinsnet
 networks:
