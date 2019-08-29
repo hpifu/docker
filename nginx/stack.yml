@@ -19,6 +19,7 @@ services:
       - jenkinsnet
       - wordpressnet
       - chronografnet
+      - vue-accountnet
 networks:
   nginxnet:
     name: nginxnet
@@ -37,3 +38,6 @@ networks:
   chronografnet:
     external: true
     name: chronografnet
+  vue-accountnet:
+    external: true
+    name: vue-accountnet
