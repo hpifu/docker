@@ -14,7 +14,6 @@ endif
 
 deploy:
 	mkdir -p ${HOME}/var/docker/${repository}/data
-	chown -R 100:101 ${HOME}/var/docker/${repository}/data
 	docker stack deploy -c stack.yml ${repository}
 
 remove:
