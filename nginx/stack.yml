@@ -21,6 +21,7 @@ services:
       - chronografnet
       - vue-accountnet
       - go-accountnet
+      - go-cloudnet
 networks:
   nginxnet:
     name: nginxnet
@@ -45,3 +46,6 @@ networks:
   go-accountnet:
     external: true
     name: go-accountnet
+  go-cloudnet:
+    external: true
+    name: go-cloudnet
